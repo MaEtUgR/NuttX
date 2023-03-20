@@ -347,7 +347,11 @@ static inline void setbasepri(uint32_t basepri)
 static inline void raisebasepri(uint32_t basepri) always_inline_function;
 static inline void raisebasepri(uint32_t basepri)
 {
+  /* Avoid GCC12 uninitialized warning */
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wuninitialized"
   register uint32_t primask;
+#pragma GCC diagnostic pop
 
   /* 1. Retain the previous value of the PRIMASK register,
    * 2  Disable all interrupts via the PRIMASK register.  NOTE:  They
